@@ -10,15 +10,19 @@ For more information, follow [this](https://sdmx.org/?page_id=5096).
 
 ## How to use it?
 
-`darkr` will be available soon on CRAN.
+`darkr` will be available on CRAN when basic features will be developed.
 
 For now, you need to clone this repository, open the project in RStudio, then load the package using `devtools::load_all()`. Once done, try:
 
 ```R
-engine <- darkr::get_engine()
-engine$eval("res := 3 * 3;")
-# 9
+res <- darkr::vtl_eval("a := 3 * 3; b := 33; c := a + b;")
+# 42
 ```
+
+## Roadmap
+
+[x] Basic wrapping of Trevas
+[ ] Dataframes operations
 
 ## How to developp?
 
