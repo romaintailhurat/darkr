@@ -10,7 +10,7 @@ For more information, follow [this](https://sdmx.org/?page_id=5096).
 
 ## How to use it?
 
-`darkr` will be available on CRAN when basic features will be developed.
+`darkr` will be available on CRAN as soon as a sufficiently large set of features is developed and tested.
 
 For now, you need to clone this repository, open the project in RStudio, then load the package using `devtools::load_all()`. Once done, try:
 
