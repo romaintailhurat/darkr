@@ -8,6 +8,7 @@ get_engine <- function() {
   #FIXME or cache the engine ifself?
   script_engine_factory <- rJava::.jnew(class = "fr/insee/vtl/engine/VtlScriptEngineFactory")
   engine <- script_engine_factory$getScriptEngine()
+  engine
 }
 
 

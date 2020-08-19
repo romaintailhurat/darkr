@@ -21,8 +21,8 @@ res <- darkr::vtl_eval("a := 3 * 3; b := 33; c := a + b;")
 
 ## Roadmap
 
-[X] Basic wrapping of Trevas
-[] Dataframes operations
+- [x] Basic wrapping of Trevas
+- [ ] Dataframes operations
 
 ## How to developp?
 
