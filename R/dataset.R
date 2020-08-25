@@ -1,39 +1,46 @@
-df_to_ds <- function(df) {
+check_df <- function(df) {
   if (!is.data.frame(df)) {
     stop("The parameter should be a dataframe.")
   }
   if (is.null(dim(df))) {
     stop("The dataframe must not be empty.")
   }
-  cols <- names(df)
-  # Computing data parameter
-  args_mat <- apply(df, 1, function(row) {
-    row_to_map_args(names(df), row)
+}
+
+df_to_ds <- function(df) {
+  check_df(df)
+
+  data <- df_to_data(df)
+  components <- df_to_component_list(df)
+  ds <- create_in_memory_dataset(data, components)
+}
+
+df_to_component_list <- function(df) {
+  check_df(df)
+  role_enum <- rJava::J(JAVA_FQN$VTL$Dataset)$Role
+  components_list <- lapply(names(df), function(col_name) {
+    if(col_name == "id") {
+      create_component(col_name, rJava::J(JAVA_FQN$Lang$String)$class, role_enum$IDENTIFIER)
+    } else {
+      k <- class(df[[ col_name ]])
+      klass <- to_java_type(k)
+      create_component(col_name, klass, role_enum$MEASURE)
+    }
   })
-  maps <- apply(args_mat, 2, function(col) {map_of(col)})
-  data <- list_of(maps)
-  # Types
-  tt <- sapply(df, function(col) typeof(col))
-  targs <- row_to_map_args(names(tt), tt)
-  targs[ targs == "character" ] <- c(J(JAVA_FQDN$Lang$String)$class)
-  targs[ targs == "double" ] <- c(J(JAVA_FQDN$Lang$Double)$class)
-  types <- map_of(unlist(targs))
-  # Roles
-  role_enum <- J(JAVA_FQDN$VTL$Dataset)$Role
-  tail_ <- tail(cols, length(cols)-1)
-  # FIXME simple implem where the 1st column is an identifier, the rest is measure only.
-  roles <- map_of(
-    c(
-      c(head(cols, 1), role_enum$IDENTIFIER),
-      c(tail_, replicate(length(tail_), role_enum$MEASURE))
-    )
-  )
-  # Creating the dataset
-  ds <- .jnew(
-    "fr/insee/vtl/model/InMemoryDataset",
-    data,
-    types,
-    roles
-    )
-  ds
+  list_of(components_list)
+}
+
+df_to_data <- function(df) {
+  rows_list <- sapply(as.data.frame(t(df)), function(row) list_of(row))
+  list_of(rows_list)
+}
+
+to_java_type <- function(rtype) {
+  if (rtype == "character") {
+    type <- rJava::J(JAVA_FQN$Lang$String)$class
+  }
+  if (rtype == "double" | rtype == "numeric") {
+    type <- rJava::J(JAVA_FQN$Lang$Double)$class
+  }
+  type
 }

@@ -1,12 +1,13 @@
 #' This module provides functions helping with Java calls
 
-JAVA_FQDN <- list(
+JAVA_FQN <- list(
   "Lang" = list(
     "String" = "java/lang/String",
     "Double" = "java/lang/Double"
   ),
   "VTL" = list(
-    "Dataset" = "fr/insee/vtl/model/Dataset"
+    "Dataset" = "fr/insee/vtl/model/Dataset",
+    "InMemoryDataset" = "fr/insee/vtl/model/InMemoryDataset"
   )
 
 )
@@ -20,7 +21,7 @@ JAVA_FQDN <- list(
 #'   map_of(row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34)))
 map_of <- function(args_vector) {
   do.call(
-    J("java/util/Map")$of,
+    rJava::J("java/util/Map")$of,
     as.list(args_vector)
   )
 }
@@ -28,12 +29,26 @@ map_of <- function(args_vector) {
 #' Create a `List` from a vector of arguments using the `of` static method.
 #'
 #' @param args_vector A vector of argument
-#' @return A Java Map
-list_of <- function(args_vector) {
-  do.call(
-    J("java/util/List")$of,
-    as.list(args_vector)
-  )
+#' @return A Java List
+list_of <- function(...) {
+  if(length(list(...)) == 1) {
+    if(is.list(...)) {
+      do.call(
+        rJava::J("java/util/List")$of,
+        ...
+      )
+    } else {
+      do.call(
+        rJava::J("java/util/List")$of,
+        list(...)
+      )
+    }
+  } else  {
+    do.call(
+      rJava::J("java/util/List")$of,
+      list(...)
+    )
+  }
 }
 
 #' Provided with a list of keys (names of a row) and a list of values (from the row),
@@ -47,4 +62,14 @@ row_to_map_args <- function(names, values) {
   )
   names(map_args) <- NULL
   map_args
+}
+
+
+create_component <- function(name, klass, role) {
+  Component <- rJava::J("fr/insee/vtl/model/Dataset$Component")
+  rJava::new(Component, name, klass, role)
+}
+
+create_in_memory_dataset <- function(data, components) {
+  rJava::new(rJava::J(JAVA_FQN$VTL$InMemoryDataset), data, components)
 }
