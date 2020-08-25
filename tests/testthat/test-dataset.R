@@ -1,11 +1,3 @@
-mock_df <- function() {
-  data.frame(
-    id = c("1", "2"),
-    name = c("Hadrien", "Nico"),
-    age = c("33", "34")
-    )
-}
-
 test_that("Creating a list of components from a dataframe", {
   df <- mock_df()
   cmps_list <- df_to_component_list(df)
