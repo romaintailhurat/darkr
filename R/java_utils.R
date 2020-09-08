@@ -3,7 +3,8 @@
 JAVA_FQN <- list(
   "Lang" = list(
     "String" = "java/lang/String",
-    "Double" = "java/lang/Double"
+    "Double" = "java/lang/Double",
+    "Long" = "java/lang/Long"
   ),
   "VTL" = list(
     "Dataset" = "fr/insee/vtl/model/Dataset",
