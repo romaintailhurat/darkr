@@ -69,7 +69,7 @@ age_dataset <- engine$eval("ds := ds1[filter age > 10 and age < 50];")
 # >  java.lang.UnsupportedOperationException: implement the other comparison
 
 # Filter on "name" return a dataset...
-hadrien_dataset <- engine$eval("ds := ds1[filter name = Hadrien];")
+hadrien_dataset <- engine$eval("ds := ds1[filter name = \"Hadrien\"];")
 # ...that is empty
 hadrien_dataset$getDataPoints()$toArray()$length
 # > 0
