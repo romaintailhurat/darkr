@@ -19,10 +19,22 @@ res <- darkr::vtl_eval("a := 3 * 3; b := 33; c := a + b;")
 # 42
 ```
 
+You cand also use a VTL expression over a dataframe:
+
+```R
+df <- darkr::mock_df()
+ds <- darkr::df_to_ds(df)
+new <- darkr::vtl_eval("new_ds := ds[ drop age ];", ds)
+```
+
 ## Roadmap
 
 - [x] Basic wrapping of Trevas
-- [ ] Dataframes operations
+- [x] Dataframes operations : 
+  - [x] basic support of Trevas dataset operations
+  - [x] transformation function from a dataframe to a [Trevas dataset](https://github.com/InseeFr/Trevas/blob/master/vtl-model/src/main/java/fr/insee/vtl/model/Dataset.java)
+  - [ ] back from a dataset to a dataframe
+- [ ] Support multiple bindings when evaluating a VTL expression
 
 ## How to developp?
 
