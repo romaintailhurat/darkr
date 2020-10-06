@@ -7,7 +7,7 @@
 list_of(...)
 }
 \arguments{
-\item{args_vector}{A vector of argument}
+\item{...}{Arguments}
 }
 \value{
 A Java List

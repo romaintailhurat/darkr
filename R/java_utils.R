@@ -14,12 +14,12 @@ JAVA_FQN <- list(
 )
 
 #' Create a `Map` from a vector of arguments to the `of` static method.
+#' Example:
+#'   map_of(c("name", "Hadrien"))
+#'   map_of(row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34)))
 #'
 #' @param args_vector A vector of argument
 #' @return A Java Map
-#' @usage
-#'   map_of(c("name", "Hadrien"))
-#'   map_of(row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34)))
 map_of <- function(args_vector) {
   do.call(
     rJava::J("java/util/Map")$of,
@@ -29,7 +29,7 @@ map_of <- function(args_vector) {
 
 #' Create a `List` from a vector of arguments using the `of` static method.
 #'
-#' @param args_vector A vector of argument
+#' @param ... Arguments
 #' @return A Java List
 list_of <- function(...) {
   if(length(list(...)) == 1) {
@@ -54,9 +54,12 @@ list_of <- function(...) {
 
 #' Provided with a list of keys (names of a row) and a list of values (from the row),
 #' this function return a vector that will be arguments to `map_of`.
-#' @usage
+#' Example:
 #'   row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34))
 #'   # "NAME"    "Hadrien" "AGE"     "34"
+#'
+#'  @param names A vector of names
+#'  @param values A vector of values
 row_to_map_args <- function(names, values) {
   map_args <- unlist(
     mapply(list, names, values, SIMPLIFY = FALSE)

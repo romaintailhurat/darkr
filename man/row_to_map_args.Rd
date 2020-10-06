@@ -3,12 +3,13 @@
 \name{row_to_map_args}
 \alias{row_to_map_args}
 \title{Provided with a list of keys (names of a row) and a list of values (from the row),
-this function return a vector that will be arguments to \code{map_of}.}
+this function return a vector that will be arguments to \code{map_of}.
+Example:
+row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34))"NAME"    "Hadrien" "AGE"     "34"}
 \usage{
-row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34))
-  # "NAME"    "Hadrien" "AGE"     "34"
+row_to_map_args(names, values)
 }
 \description{
-Provided with a list of keys (names of a row) and a list of values (from the row),
-this function return a vector that will be arguments to \code{map_of}.
+@param names A vector of names
+@param values A vector of values
 }

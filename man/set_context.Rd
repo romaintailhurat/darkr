@@ -6,9 +6,15 @@
 \usage{
 set_context(context, obj)
 }
+\arguments{
+\item{context}{an engine context}
+
+\item{obj}{an object, for example a dataset}
+}
 \description{
 This module provide evaluation functions for VTL expressions
 }
 \author{
 Romain Tailhurat
+Helper to add an object to the engine context.
 }

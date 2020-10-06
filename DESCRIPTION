@@ -2,12 +2,12 @@ Package: darkr
 Title: A VTL engine R API
 Version: 0.2.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Romain",
+           family = "Tailhurat",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "romain.tailhurat@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: darkr is an API for the Trevas VTL engine
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
