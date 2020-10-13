@@ -40,9 +40,9 @@ new_df <- darkr::ds_to_df(new_ds)
 
 This is a _work in progress_, some important parts are missing:
 
-- for now, we only transform a data frame into a dataset, the inverse operation is missing (currently in development),
 - we create a VTL identifier based on column names `id` or `name` if they exist, overriding is not possible,
-- multiple bindings are not supported.
+- multiple bindings are not supported,
+- the Java implementation of a dataset currently used is very basic, it is probably not intended to be on par with native R performance.
 
 ## Roadmap
 
