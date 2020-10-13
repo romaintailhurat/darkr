@@ -1,3 +1,5 @@
 ^darkr\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^cran-comments\.md$
+^__[a-z]+__.R$
