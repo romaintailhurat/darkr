@@ -19,12 +19,17 @@ res <- darkr::vtl_eval("a := 3 * 3; b := 33; c := a + b;")
 # 42
 ```
 
-You cand also use a VTL expression over a dataframe:
+You can also use a VTL expression over a dataframe:
 
 ```R
 df <- darkr::mock_df()
+# names(df)
+# [1] "id"   "name" "age"
 ds <- darkr::df_to_ds(df)
-new <- darkr::vtl_eval("new_ds := ds[ drop age ];", ds)
+new_ds <- darkr::vtl_eval("new_ds := ds[ drop age ];", ds)
+new_df <- darkr::ds_to_df(new_ds)
+# names(new_df)
+# [1] "id"   "name"
 ```
 
 ## Limits
