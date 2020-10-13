@@ -1,3 +1,5 @@
+#' Check if parameter is an non emtpy dataframe
+#' @param df a dataframe
 check_df <- function(df) {
   if (!is.data.frame(df)) {
     stop("The parameter should be a dataframe.")
@@ -7,11 +9,32 @@ check_df <- function(df) {
   }
 }
 
+check_ds <- function(ds) {
+  ds_type <- typeof(ds)
+  if(ds_type != "S4") {
+    msg <- paste("The parameter type is not correct:", ds_type, "instead of S4")
+    stop(msg)
+  }
+
+  if(ds@jclass != JAVA_FQN$VTL$InMemoryDataset) {
+    msg <- paste("The parameter should be of class", JAVA_FQN$VTL$InMemoryDataset, "not", ds@jclass)
+    stop(msg)
+  }
+}
+
+#' Transform a dataframe into a Java dataset.
+#' This is the core feature of `darkr`: providing a bridge to the Java
+#' representation of a VTL dataset in Trevas
+#' @param df a dataframe
 df_to_ds <- function(df) {
   check_df(df)
   data <- df_to_data(df)
   components <- df_to_component_list(df)
   ds <- create_in_memory_dataset(data, components)
+}
+
+ds_to_df <- function(ds) {
+
 }
 
 df_to_component_list <- function(df) {
