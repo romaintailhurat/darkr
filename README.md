@@ -12,7 +12,11 @@ For more information, follow [this](https://sdmx.org/?page_id=5096).
 
 `darkr` will be available on CRAN as soon as a sufficiently large set of features is developed and tested.
 
-For now, you need to clone this repository, open the project in RStudio, then load the package using `devtools::load_all()`. Once done, try:
+For now, you need to clone this repository, open the project in RStudio, then load the package using `devtools::load_all()`.
+
+You could also install it via `devtools::install_github("romaintailhurat/darkr")`.
+
+Once done, try:
 
 ```R
 res <- darkr::vtl_eval("a := 3 * 3; b := 33; c := a + b;")
@@ -46,8 +50,13 @@ This is a _work in progress_, some important parts are missing:
 - [x] Dataframes operations :
   - [x] basic support of Trevas dataset operations
   - [x] transformation function from a dataframe to a [Trevas dataset](https://github.com/InseeFr/Trevas/blob/master/vtl-model/src/main/java/fr/insee/vtl/model/Dataset.java)
-  - [ ] back from a dataset to a dataframe
-- [ ] Support multiple bindings when evaluating a VTL expression
+  - [x] back from a dataset to a dataframe
+- [ ] Evaluation
+  - [ ] Support multiple bindings when evaluating a VTL expression
+  - [ ] Directly support R values for bindings (eg data frames)
+  - [ ] Implement a VTL expression builder
+- [ ] Benchmarking
+  - [ ] Compare pure R operations VS Trevas
 
 ## How to developp?
 
