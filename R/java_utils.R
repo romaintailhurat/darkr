@@ -54,12 +54,8 @@ list_of <- function(...) {
 
 #' Provided with a list of keys (names of a row) and a list of values (from the row),
 #' this function return a vector that will be arguments to `map_of`.
-#' Example:
-#'   row_to_map_args(c("NAME", "AGE"), c("Hadrien", 34))
-#'   # "NAME"    "Hadrien" "AGE"     "34"
-#'
-#'  @param names A vector of names
-#'  @param values A vector of values
+#' @param names A vector of names
+#' @param values A vector of values
 row_to_map_args <- function(names, values) {
   map_args <- unlist(
     mapply(list, names, values, SIMPLIFY = FALSE)
