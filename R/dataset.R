@@ -9,6 +9,8 @@ check_df <- function(df) {
   }
 }
 
+#' Check if parameter is a valid dataset
+#' @param ds a dataset
 check_ds <- function(ds) {
   ds_type <- typeof(ds)
   if(ds_type != "S4") {
@@ -33,8 +35,27 @@ df_to_ds <- function(df) {
   ds <- create_in_memory_dataset(data, components)
 }
 
+#' Transform a Trevas Java dataset into a dataframe.
+#' @param ds a dataset
 ds_to_df <- function(ds) {
-
+  check_ds(ds)
+  columns <- list()
+  ds_struct <- ds$getDataStructure()
+  ds_struct_array <- ds_struct$toArray()
+  data_points <- dataset$getDataPoints()
+  dp_array <- data_points$toArray()
+  for (i in 1:length(ds_struct_array)) {
+    current_component <- ds_struct_array[[i]]
+    type <- current_component$getType() # TODO use it to type the dataframe columns
+    col_vals <- c()
+    for (j in 1:length(dp_array)) {
+      row <- dp_array[[j]]
+      ar <- row$toArray()
+      col_vals <- c(col_vals, ar[[i]]$toString())
+    }
+    columns[[ current_component$getName() ]] <- col_vals
+  }
+  return(as.data.frame(columns))
 }
 
 df_to_component_list <- function(df) {
@@ -68,7 +89,10 @@ df_to_data <- function(df) {
   list_of(rows_list)
 }
 
+#' Map some R types to Java base classes.
+#' @param rtype a vector type from R
 to_java_type <- function(rtype) {
+  type <- NULL
   if (rtype == "character") {
     type <- rJava::J(JAVA_FQN$Lang$String)$class
   }
@@ -76,5 +100,13 @@ to_java_type <- function(rtype) {
     type <- rJava::J(JAVA_FQN$Lang$Long)$class
   }
   # FIXME handle other R types (as Object ?)
+  type
+}
+
+to_rtype <- function(java_type) {
+  type <- NULL
+  if (java_type == "Java-Object{class java.lang.String}") {
+    type <- "character"
+  }
   type
 }

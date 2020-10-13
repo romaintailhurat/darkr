@@ -21,3 +21,12 @@ test_that("Can create a dataset from a dataframe", {
     "class fr.insee.vtl.model.InMemoryDataset"
   )
 })
+
+test_that("Dataset to dataframe", {
+  df <- mock_df()
+  ds <- df_to_ds(df)
+  df_back <- ds_to_df(ds)
+
+  expect_equal(ncol(df_back), 3)
+  expect_equal(names(df_back), c("id", "name", "age"))
+})
