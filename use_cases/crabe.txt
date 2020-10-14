@@ -1,0 +1,38 @@
+// Data is here: http://l4tu7k.pages.lab.sspcloud.fr/fake-data/crabe.json
+// CSV converter: https://gist.github.com/romaintailhurat/7640c8845beac1c4e0ae45a9cb84616e
+
+// Produce 4 filtered datasets
+ds_strate1 := ds_input[filter lgt_social = true and nb_pers > 1];
+ds_strate2 := ds_input[filter lgt_social = true and nb_pers <= 1];
+ds_strate3 := ds_input[filter lgt_social = false and (natloc = "AP" or natloc = "MA")];
+ds_strate4 := ds_input[filter lgt_social = false and (not (natloc in {"AP", "MA"}))];
+
+// Produce 1 dataset, building 4 temps variables apart & strate as final variable
+ds_crabe := ds_input   [calc strate1 := if (lgt_social = true and nb_pers > 1) then "strate1" else ""]
+					[calc strate2 := if (lgt_social = true and nb_pers <= 1) then "strate2" else ""]
+					[calc strate3 := if (lgt_social = false and (natloc = "AP" or natloc = "MA")) then "strate3" else ""]
+					[calc strate4 := if (lgt_social = false and (not (natloc in {"AP", "MA"}))) then "strate4" else ""]
+					[drop strate]
+					[calc strate := strate1 || strate2 || strate3 || strate4]
+					[keep id, strate];
+
+// Produce 1 dataset, building 4 temps variables together & strate as final variable						
+ds_crabe2 := ds_input[calc strate1 := if (lgt_social = true and nb_pers > 1) then "strate1" else "",
+					strate2 := if (lgt_social = true and nb_pers <= 1) then "strate2" else "",
+					strate3 := if (lgt_social = false and (natloc = "AP" or natloc = "MA")) then "strate3" else "",
+					strate4 := if (lgt_social = false and (not (natloc in {"AP", "MA"}))) then "strate4" else ""]
+					[drop strate]
+					[calc strate := strate1 || strate2 || strate3 || strate4]
+					[keep id, strate]
+					[rename strate to strate_crabe];
+
+// Produce 1 dataset, building directly strate variable				
+ds_crabe3 := ds_input	[drop strate]
+					[calc strate := if (lgt_social = true and nb_pers > 1) then "strate1" else (
+						if (lgt_social = true and nb_pers <= 1) then "strate2" else (
+							if (lgt_social = false and (natloc = "AP" or natloc = "MA")) then "strate3" else (
+								if (lgt_social = false and (not (natloc in {"AP", "MA"}))) then "strate4" else ""
+							)
+						)
+					)]
+					[keep id, strate];
