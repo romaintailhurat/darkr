@@ -17,6 +17,7 @@ set_context <- function(context, obj) {
 #' Evaluate a VTL expression, with bindings if necessary;
 #' @param vtl_expression a string being a valid VTL expression
 #' @param bindings the provided bindings
+#' @export
 vtl_eval <- function(vtl_expression, bindings = NULL) {
   engine <- get_engine()
   # TODO for now, we only support one binding

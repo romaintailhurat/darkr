@@ -28,6 +28,7 @@ check_ds <- function(ds) {
 #' This is the core feature of `darkr`: providing a bridge to the Java
 #' representation of a VTL dataset in Trevas
 #' @param df a dataframe
+#' @export
 df_to_ds <- function(df) {
   check_df(df)
   data <- df_to_data(df)
@@ -37,12 +38,13 @@ df_to_ds <- function(df) {
 
 #' Transform a Trevas Java dataset into a dataframe.
 #' @param ds a dataset
+#' @export
 ds_to_df <- function(ds) {
   check_ds(ds)
   columns <- list()
   ds_struct <- ds$getDataStructure()
   ds_struct_array <- ds_struct$toArray()
-  data_points <- dataset$getDataPoints()
+  data_points <- ds$getDataPoints()
   dp_array <- data_points$toArray()
   for (i in 1:length(ds_struct_array)) {
     current_component <- ds_struct_array[[i]]
